@@ -2,10 +2,19 @@ exports.up = function(knex) {
   return Promise.all([
     knex.schema.createTable('recipes', function(table) {
       table.increments('id').primary();
-      t.string('title').notNullable();
-      t.string('password').notNullable();
+      table.string('label').notNullable();
+      table.string('image').notNullable();
+      table.string('url').notNullable();
+      table.string('yield').notNullable();              // number of servings
+      table.string('calories').notNullable();
+      table.string('totalWeight').notNullable();
+      // t.string('ingredients').notNullable();     //would require another table
+      // t.string('totalNutrients').notNullable();  //would require another table
+      // t.string('totalDaily').notNullable();      //would require another table
+      // t.string('dietLabels').notNullable();      //would require another table
+      // t.string('healthLabels').notNullable();    //would require another table
 
-      table.timestamps(true, true);
+      // table.timestamps(true, true);
     })
   ])
 };
