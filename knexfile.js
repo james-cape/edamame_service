@@ -32,18 +32,11 @@ module.exports = {
 
   production: {
     client: 'pg',
-    connection: {
-      database: 'my_db',
-      user:     'jamescape',
-      password: null
-    },
-    pool: {
-      min: 2,
-      max: 10
-    },
+    connection: process.env.DATABASE_URL + `?ssl=true`,
     migrations: {
-      tableName: 'recipes'
-    }
+      directory: './db/migrations'
+    },
+    useNullAsDefault: true
   }
 
 };
