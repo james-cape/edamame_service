@@ -53,12 +53,15 @@ module.exports = {
   production: {
     client: 'pg',
     connection: process.env.HEROKU_DB_URL,
+    migrations: {
+      directory: './db/migrations'
+    },
+    seeds: {
+      directory: './db/seeds/dev'
+    },
     pool: {
       min: 2,
       max: 10
-    },
-    migrations: {
-      tableName: 'knex_migrations'
     }
   }
 
