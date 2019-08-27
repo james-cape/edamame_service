@@ -28,9 +28,10 @@ app.get('/api/v1/recipes', (request, response) => {
 
 /* GET recipes from Edamam */
 app.get('/recipes', async (req, res) => {
-  fetch(`https://api.edamam.com/search?q=banana&app_id=${process.env.EDAMAME_APPLICATION_ID}&app_key=${process.env.EDAMAME_APPLICATION_KEY}&to=20`)
+  fetch(`https://api.edamam.com/search?q=${req.query.food}&app_id=${process.env.EDAMAME_APPLICATION_ID}&app_key=${process.env.EDAMAME_APPLICATION_KEY}&to=${req.query.limit}`)
   .then(res => res.json())
   .then(results => {
+    let accumulator = []
     results["hits"].forEach( result => {
       database('recipes')
       .insert({
@@ -41,33 +42,22 @@ app.get('/recipes', async (req, res) => {
         yield: result["recipe"]["yield"],
         calories: result["recipe"]["calories"],
         totalWeight: result["recipe"]["totalWeight"]
+      }, ["label"])
+      .then(recipe => {
+        accumulator.push(recipe[0]["label"])
       })
+      return accumulator
     })
-    return results.hits.length
   })
-  .then(count => {
+  .then(addedRecipes => {
     res.setHeader("Content-Type", "application/json");
-    res.status(200).send(JSON.stringify({message: `${count} recipes added.`}));
+    res.status(201).send(JSON.stringify({data: `Added recipes to the database`}));
   })
   .catch(error => {
     res.setHeader("Content-Type", "application/json");
     res.status(401).send({ error });
   })
 });
-
-  // .then(body => JSON.parse(body)["results"][0]["geometry"]["location"])
-  // .then(coordinates => {
-  //   fetch(`https://api.darksky.net/forecast/${process.env.DARK_SKY_API_KEY}/${coordinates["lat"]},${coordinates["lng"]}`)
-  //   .then(response => response.text())
-  //   .then(body => {
-  //     res.setHeader("Content-Type", "application/json");
-  //     res.status(200).send(JSON.stringify({data: new edamamSerializer(body,req.query.location)}));
-  //   })
-  // })
-  // .catch(error => {
-  //   res.setHeader("Content-Type", "application/json");
-  //   res.status(401).send({ error });
-  // });
 
 app.listen(app.get('port'), () => {
   console.log(`${app.locals.title} is running on http://localhost:${app.get('port')}.`);
