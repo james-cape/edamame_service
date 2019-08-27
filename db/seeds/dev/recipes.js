@@ -4,6 +4,7 @@ exports.seed = function(knex) {
     return Promise.all([
       knex('recipes').insert([
         {
+          food: 'cheese',
           label: 'Triple Cheese Pizza',
           image: 'https://www.totinos.com/wp-content/uploads/2018/09/totinos-party-pizza-triple-cheese-460x460.png',
           url: 'https://www.totinos.com/products/triple-cheese-party-pizza/',
@@ -12,6 +13,7 @@ exports.seed = function(knex) {
           totalWeight: 495
         },
         {
+          food: 'turkey',
           label: 'Turkey with Potatoes',
           image: 'https://cafedelites.com/wp-content/uploads/2016/11/Herb-Roast-Turkey-13.jpg',
           url: 'https://cafedelites.com/one-pan-juicy-herb-roasted-turkey/',
@@ -20,6 +22,7 @@ exports.seed = function(knex) {
           totalWeight: 875
         },
         {
+          food: 'onion',
           label: 'Grilled Vegetables',
           image: 'http://www.howsweeteats.com/wp-content/uploads/2018/08/grilled-veg-bread-I-howsweeteats.com-18.jpg',
           url: 'https://www.foodnetwork.com/recipes/giada-de-laurentiis/grilled-vegetables-recipe-1942208',
