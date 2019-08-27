@@ -52,11 +52,7 @@ module.exports = {
 
   production: {
     client: 'pg',
-    connection: {
-      database: 'edamam_production',
-      user:     'bp',
-      password: null
-    },
+    connection: process.env.HEROKU_DB_URL,
     pool: {
       min: 2,
       max: 10
