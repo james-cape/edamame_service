@@ -4,7 +4,11 @@ module.exports = {
 
   development: {
     client: 'pg',
-    connection: 'postgres://localhost/recipes',
+    connection: {
+      database: 'edamam_development',
+      user:     'bp',
+      password: null
+    },
     migrations: {
       directory: './db/migrations'
     },
@@ -14,25 +18,13 @@ module.exports = {
     useNullAsDefault: true
   },
 
-  // staging: {
-  //   client: 'pg',
-  //   connection: {
-  //     database: 'my_db',
-  //     user:     'jamescape',
-  //     password: null
-  //   },
-  //   pool: {
-  //     min: 2,
-  //     max: 10
-  //   },
-  //   migrations: {
-  //     tableName: 'recipes'
-  //   }
-  // },
-
-  production: {
+  test: {
     client: 'pg',
-    connection: process.env.DATABASE_URL + `?ssl=true`,
+    connection: {
+      database: 'edamam_test',
+      user:     'bp',
+      password: null
+    },
     migrations: {
       directory: './db/migrations'
     },
@@ -40,6 +32,34 @@ module.exports = {
       directory: './db/seeds/dev'
     },
     useNullAsDefault: true
+  },
+
+  staging: {
+    client: 'pg',
+    connection: {
+      database: 'edamam_staging',
+      user:     'bp',
+      password: null
+    },
+    pool: {
+      min: 2,
+      max: 10
+    },
+    migrations: {
+      tableName: 'knex_migrations'
+    }
+  },
+
+  production: {
+    client: 'pg',
+    connection: process.env.HEROKU_DB_URL,
+    migrations: {
+      directory: './db/migrations'
+    },
+    pool: {
+      min: 2,
+      max: 10
+    }
   }
 
 };
