@@ -20,7 +20,7 @@ app.get('/', (request, response) => {
 app.get('/api/v1/food_search', (request, response) => {
   database('recipes').select({
     where: {
-      food: req.query.q
+      food: request.query.q
     }
   })
   .then((recipes) => {
