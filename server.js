@@ -19,6 +19,7 @@ app.get('/', (request, response) => {
 /* GET recipes from food query. */
 app.get('/api/v1/food_search', (request, response) => {
   database('recipes').select({
+    console.log(request.query.q, "QUERY PARAM")
     where: {
       food: request.query.q
     }
@@ -27,6 +28,7 @@ app.get('/api/v1/food_search', (request, response) => {
     response.status(200).json(recipes);
   })
   .catch((error) => {
+    console.log(error)
     response.status(500).json({ error });
   });
 });
