@@ -53,8 +53,8 @@ app.get('/api/v1/servings', (request, response) => {
 /* GET recipes from weight range query. */
 app.get('/api/v1/weight', (request, response) => {
   database('recipes')
-  .where('min', '<', request.query.min)
-  .where('max', '>=', request.query.max)
+  .where('totalWeight', '>=', request.query.min)
+  .where('totalWeight', '<', request.query.max)
   .select()
   .then((recipes) => {
     response.setHeader("Content-Type", "application/json");
