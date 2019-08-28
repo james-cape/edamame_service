@@ -17,7 +17,7 @@ app.get('/', (request, response) => {
 });
 
 /* GET recipes from food query. */
-app.get('/api/v1/food_search', (request, response) => {
+app.get('/api/v1/recipes/food_search', (request, response) => {
   database('recipes').where({
     food: request.query.q
   }).select()
@@ -32,7 +32,7 @@ app.get('/api/v1/food_search', (request, response) => {
 });
 
 /* GET recipes from servings query. */
-app.get('/api/v1/servings', (request, response) => {
+app.get('/api/v1/recipes/servings', (request, response) => {
   database('recipes').where({
     yield: request.query.q
   }).select()
@@ -51,7 +51,7 @@ app.get('/api/v1/servings', (request, response) => {
 });
 
 /* GET recipes from weight range query. */
-app.get('/api/v1/weight', (request, response) => {
+app.get('/api/v1/recipes/weight', (request, response) => {
   database('recipes')
   .where('totalWeight', '>=', request.query.min)
   .where('totalWeight', '<', request.query.max)
