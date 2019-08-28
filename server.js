@@ -16,15 +16,58 @@ app.get('/', (request, response) => {
   response.send('This is a microservice for CalorieCombs');
 });
 
-/* GET recipes from seeds files. */
-app.get('/api/v1/recipes', (request, response) => {
-  database('recipes').select()
-    .then((recipes) => {
+/* GET recipes from food query. */
+app.get('/api/v1/recipes/food_search', (request, response) => {
+  database('recipes').where({
+    food: request.query.q
+  }).select()
+  .then((recipes) => {
+    response.setHeader("Content-Type", "application/json");
+    response.status(200).json(recipes);
+  })
+  .catch((error) => {
+    response.setHeader("Content-Type", "application/json");
+    response.status(400).send({ error: 'Include food in query' });
+  });
+});
+
+/* GET recipes from servings query. */
+app.get('/api/v1/recipes/servings', (request, response) => {
+  database('recipes').where({
+    yield: request.query.q
+  }).select()
+  .then((recipes) => {
+    response.setHeader("Content-Type", "application/json");
+    if (recipes.length == 0) {
+      response.status(400).send({ error: 'No matches found for that number' });
+    } else {
       response.status(200).json(recipes);
-    })
-    .catch((error) => {
-      response.status(500).json({ error });
-    });
+    }
+  })
+  .catch((error) => {
+    response.setHeader("Content-Type", "application/json");
+    response.status(400).send({ error: 'Include servings in query' });
+  });
+});
+
+/* GET recipes from weight range query. */
+app.get('/api/v1/recipes/weight', (request, response) => {
+  database('recipes')
+  .where('totalWeight', '>=', request.query.min)
+  .where('totalWeight', '<', request.query.max)
+  .select()
+  .then((recipes) => {
+    response.setHeader("Content-Type", "application/json");
+    if (recipes.length == 0) {
+      response.status(400).send({ error: 'No matches found for that weight range' });
+    } else {
+      response.status(200).json(recipes);
+    }
+  })
+  .catch((error) => {
+    response.setHeader("Content-Type", "application/json");
+    response.status(400).send({ error: 'Include max and min weight in query' });
+  });
 });
 
 /* GET recipes from Edamam */
