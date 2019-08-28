@@ -22,10 +22,12 @@ app.get('/api/v1/food_search', (request, response) => {
     food: request.query.q
   }).select()
   .then((recipes) => {
+    res.setHeader("Content-Type", "application/json");
     response.status(200).json(recipes);
   })
   .catch((error) => {
-    response.status(500).json({ error });
+    res.setHeader("Content-Type", "application/json");
+    response.status(400).send({ error: 'Food not found' });
   });
 });
 
