@@ -1,5 +1,6 @@
 const express = require('express');
 const app = express();
+var router = express.Router();
 
 const fetch = require('node-fetch');
 require('dotenv').config();
@@ -62,3 +63,5 @@ app.get('/recipes', async (req, res) => {
 app.listen(app.get('port'), () => {
   console.log(`${app.locals.title} is running on http://localhost:${app.get('port')}.`);
 });
+
+module.exports = router;
