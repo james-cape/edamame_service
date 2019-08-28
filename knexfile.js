@@ -6,7 +6,7 @@ module.exports = {
     client: 'pg',
     connection: {
       database: 'edamam_development',
-      user:     'bp',
+      user:     'jamescape',
       password: null
     },
     migrations: {
@@ -22,7 +22,7 @@ module.exports = {
     client: 'pg',
     connection: {
       database: 'edamam_test',
-      user:     'bp',
+      user:     'jamescape',
       password: null
     },
     migrations: {
@@ -38,7 +38,7 @@ module.exports = {
     client: 'pg',
     connection: {
       database: 'edamam_staging',
-      user:     'bp',
+      user:     'jamescape',
       password: null
     },
     pool: {
