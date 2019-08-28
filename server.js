@@ -27,7 +27,7 @@ app.get('/api/v1/food_search', (request, response) => {
   })
   .catch((error) => {
     res.setHeader("Content-Type", "application/json");
-    response.status(400).send({ error: 'Food not found' });
+    response.status(400).send({ error: 'Include food in query' });
   });
 });
 
