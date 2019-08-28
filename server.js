@@ -16,15 +16,19 @@ app.get('/', (request, response) => {
   response.send('This is a microservice for CalorieCombs');
 });
 
-/* GET recipes from seeds files. */
-app.get('/api/v1/recipes', (request, response) => {
-  database('recipes').select()
-    .then((recipes) => {
-      response.status(200).json(recipes);
-    })
-    .catch((error) => {
-      response.status(500).json({ error });
-    });
+/* GET recipes from food query. */
+app.get('/api/v1/food_search', (request, response) => {
+  database('recipes').select({
+    where: {
+      food: req.query.q
+    }
+  })
+  .then((recipes) => {
+    response.status(200).json(recipes);
+  })
+  .catch((error) => {
+    response.status(500).json({ error });
+  });
 });
 
 /* GET recipes from Edamam */
