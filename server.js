@@ -18,10 +18,10 @@ app.get('/', (request, response) => {
 
 /* GET recipes from food query. */
 app.get('/api/v1/food_search', (request, response) => {
+  console.log(request.query.q, "QUERY PARAM")
   database('recipes').select({
-    console.log(request.query["q"], "QUERY PARAM")
     where: {
-      food: request.query["q"]
+      food: request.query.q
     }
   })
   .then((recipes) => {
