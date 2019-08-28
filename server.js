@@ -38,7 +38,7 @@ app.get('/api/v1/servings', (request, response) => {
   }).select()
   .then((recipes) => {
     response.setHeader("Content-Type", "application/json");
-    if (recipes.length) == 0 {
+    if (recipes.length == 0) {
       response.status(400).send({ error: 'No matches found for that number' });
     } else {
       response.status(200).json(recipes);
