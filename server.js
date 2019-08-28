@@ -31,6 +31,21 @@ app.get('/api/v1/food_search', (request, response) => {
   });
 });
 
+/* GET recipes from servings query. */
+app.get('/api/v1/servings', (request, response) => {
+  database('recipes').where({
+    yield: request.query.q
+  }).select()
+  .then((recipes) => {
+    response.setHeader("Content-Type", "application/json");
+    response.status(200).json(recipes);
+  })
+  .catch((error) => {
+    response.setHeader("Content-Type", "application/json");
+    response.status(400).send({ error: 'Include servings in query' });
+  });
+});
+
 /* GET recipes from Edamam */
 app.get('/recipes', async (req, res) => {
   fetch(`https://api.edamam.com/search?q=${req.query.food}&app_id=${process.env.EDAMAME_APPLICATION_ID}&app_key=${process.env.EDAMAME_APPLICATION_KEY}&to=${req.query.limit}`)
