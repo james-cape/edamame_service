@@ -16,6 +16,21 @@ app.get('/', (request, response) => {
   response.send('This is a microservice for CalorieCombs');
 });
 
+/* GET average calories for a food. */
+app.get('/api/v1/recipes/calories', (request, response) => {
+  database('recipes').where({
+    food: request.query.q
+  }).avg('calories')
+  .then((calories) => {
+    response.setHeader("Content-Type", "application/json");
+    response.status(200).json(calories);
+  })
+  .catch((error) => {
+    response.setHeader("Content-Type", "application/json");
+    response.status(400).send({ error: 'Include food in query' });
+  });
+});
+
 /* GET recipes from food query. */
 app.get('/api/v1/recipes/food_search', (request, response) => {
   database('recipes').where({
