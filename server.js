@@ -16,6 +16,36 @@ app.get('/', (request, response) => {
   response.send('This is a microservice for CalorieCombs');
 });
 
+/* GET max yield for a food. */
+app.get('/api/v1/recipes/max_yield', (request, response) => {
+  database('recipes').where({
+    food: request.query.q
+  }).max('yield')
+  .then((max_yield) => {
+    response.setHeader("Content-Type", "application/json");
+    response.status(200).send({ max_yield: max_yield[0]["max"] });
+  })
+  .catch((error) => {
+    response.setHeader("Content-Type", "application/json");
+    response.status(400).send({ error: 'Include food in query' });
+  });
+});
+
+/* GET average calories for a food. */
+app.get('/api/v1/recipes/calories', (request, response) => {
+  database('recipes').where({
+    food: request.query.q
+  }).avg('calories')
+  .then((calories) => {
+    response.setHeader("Content-Type", "application/json");
+    response.status(200).json(calories);
+  })
+  .catch((error) => {
+    response.setHeader("Content-Type", "application/json");
+    response.status(400).send({ error: 'Include food in query' });
+  });
+});
+
 /* GET recipes from food query. */
 app.get('/api/v1/recipes/food_search', (request, response) => {
   database('recipes').where({
@@ -83,9 +113,9 @@ app.get('/recipes', async (req, res) => {
         label: result["recipe"]["label"],
         image: result["recipe"]["image"],
         url: result["recipe"]["url"],
-        yield: result["recipe"]["yield"],
-        calories: result["recipe"]["calories"],
-        totalWeight: result["recipe"]["totalWeight"]
+        yield: parseFloat(result["recipe"]["yield"]),
+        calories: parseFloat(result["recipe"]["calories"]),
+        totalWeight: parseFloat(result["recipe"]["totalWeight"])
       }, ["label"])
       .then(recipe => {
         accumulator.push(recipe[0]["label"])
