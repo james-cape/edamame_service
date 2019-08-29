@@ -83,9 +83,9 @@ app.get('/recipes', async (req, res) => {
         label: result["recipe"]["label"],
         image: result["recipe"]["image"],
         url: result["recipe"]["url"],
-        yield: result["recipe"]["yield"],
-        calories: result["recipe"]["calories"],
-        totalWeight: result["recipe"]["totalWeight"]
+        yield: parseFloat(result["recipe"]["yield"]),
+        calories: parseFloat(result["recipe"]["calories"]),
+        totalWeight: parseFloat(result["recipe"]["totalWeight"])
       }, ["label"])
       .then(recipe => {
         accumulator.push(recipe[0]["label"])

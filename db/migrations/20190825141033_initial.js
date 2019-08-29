@@ -5,9 +5,9 @@ exports.up = function(knex) {
       table.string('label').notNullable();
       table.string('image').notNullable();
       table.string('url').notNullable();
-      table.string('yield').notNullable();              // number of servings
-      table.string('calories').notNullable();
-      table.string('totalWeight').notNullable();
+      table.float('yield').notNullable();              // number of servings
+      table.float('calories').notNullable();
+      table.float('totalWeight').notNullable();
       // t.string('ingredients').notNullable();     //would require another table
       // t.string('totalNutrients').notNullable();  //would require another table
       // t.string('totalDaily').notNullable();      //would require another table
