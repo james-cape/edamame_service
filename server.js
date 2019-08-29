@@ -16,6 +16,21 @@ app.get('/', (request, response) => {
   response.send('This is a microservice for CalorieCombs');
 });
 
+/* GET max yield for a food. */
+app.get('/api/v1/recipes/max_yield', (request, response) => {
+  database('recipes').where({
+    food: request.query.q
+  }).max('yield')
+  .then((calories) => {
+    response.setHeader("Content-Type", "application/json");
+    response.status(200).json(calories);
+  })
+  .catch((error) => {
+    response.setHeader("Content-Type", "application/json");
+    response.status(400).send({ error: 'Include food in query' });
+  });
+});
+
 /* GET average calories for a food. */
 app.get('/api/v1/recipes/calories', (request, response) => {
   database('recipes').where({
