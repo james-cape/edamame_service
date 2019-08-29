@@ -21,9 +21,9 @@ app.get('/api/v1/recipes/max_yield', (request, response) => {
   database('recipes').where({
     food: request.query.q
   }).max('yield')
-  .then((calories) => {
+  .then((max_yield) => {
     response.setHeader("Content-Type", "application/json");
-    response.status(200).json(calories);
+    response.status(200).send({ max_yield: max_yield });
   })
   .catch((error) => {
     response.setHeader("Content-Type", "application/json");
