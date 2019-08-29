@@ -23,7 +23,7 @@ app.get('/api/v1/recipes/max_yield', (request, response) => {
   }).max('yield')
   .then((max_yield) => {
     response.setHeader("Content-Type", "application/json");
-    response.status(200).send({ max_yield: max_yield });
+    response.status(200).send({ max_yield: max_yield[0]["max"] });
   })
   .catch((error) => {
     response.setHeader("Content-Type", "application/json");
